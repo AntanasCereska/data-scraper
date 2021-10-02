@@ -1,8 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactToExcel from "react-html-table-to-excel";
-import styled from "styled-components";
+import rp from "request-promise";
+import cheerio from "cheerio";
+const URL = "https://search.vpb.lt/pdb/patent/eu/dossier/";
+const SearchForm = ({ setInputPatents, inputPatents, setData, data }) => {
+  function GetInputValues(event) {
+    let inputValuesTemp = document.getElementById("numbers-input").value;
+    let inputValuesTempSplit = inputValuesTemp.split("\n");
+    setInputPatents((prevInputPatents) => [...inputValuesTempSplit]);
+  }
 
-const SearchForm = ({ GetInputValues }) => {
+  useEffect(() => {
+    let names = [];
+
+    for (let a = 0; a < inputPatents.length; a++) {
+      console.log(URL + inputPatents[a]);
+      //console.log(`https://cors-anywhere.herokuapp.com/https://search.vpb.lt/pdb/patent/eu/dossier/` + aaa[i])
+
+      rp(URL + inputPatents[a])
+        .then((html) => {
+          let $ = cheerio.load(html);
+          let one = Object.create(null);
+
+          one.id = inputPatents[a];
+          one.isPatentValid = $(".datablock_status div p span").text();
+          if (one.isPatentValid === "Patentas galioja") {
+            one.nextYearPay = $(
+              'table:contains("Kitas metų mokestis") .value'
+            ).text();
+          } else {
+            one.nextYearPay = "";
+          }
+          console.log("✌.|•͡˘‿•͡˘|.✌   ✌.|•͡˘‿•͡˘|.✌   ✌.|•͡˘‿•͡˘|.✌");
+          names.push(one);
+          setData((prevData) => [...names]);
+        })
+        .catch(function (err) {
+          let one = Object.create(null);
+          one.id = inputPatents[a];
+          one.isPatentValid = "not found";
+          one.nextYearPay = "not found";
+          names.push(one);
+          console.log("error");
+        });
+    }
+  }, [inputPatents]);
+
   return (
     <>
       <h1>VPB patent scraper</h1>
