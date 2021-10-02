@@ -42,6 +42,7 @@ const SearchForm = ({ setInputPatents, inputPatents, setData, data }) => {
           one.nextYearPay = "not found";
           names.push(one);
           console.log("error");
+          setData((prevData) => [...names]);
         });
     }
   }, [inputPatents]);
@@ -59,6 +60,7 @@ const SearchForm = ({ setInputPatents, inputPatents, setData, data }) => {
           <button className="btn" onClick={GetInputValues}>
             Get Data
           </button>
+
           <ReactToExcel
             className="btn"
             table="data-to-excel"

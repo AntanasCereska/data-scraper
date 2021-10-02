@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
-import rp from "request-promise";
-import cheerio from "cheerio";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import "./App.css";
-
-import VPB from './components/VPB'
-import Table from "./components/Table";
-import SearchForm from "./components/SearchForm";
-
+import VPB from "./components/VPB";
+import TM from "./components/TM";
+import Header from "./components/Header";
 
 const App = () => {
-
-
   return (
-    <div className="wrapper">
-      <VPB />
-    </div>
+    <Router>
+      <Header />
+      <div className="wrapper">
+        <Switch>
+          <Route exact path="/" />
+          <Route exact path="/VPB" component={VPB} />
+          <Route exact path="/TM" component={TM} />
+        </Switch>
+      </div>
+    </Router>
   );
 };
 export default App;
