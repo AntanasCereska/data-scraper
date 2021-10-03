@@ -6,7 +6,7 @@ import cheerio from "cheerio";
 const URL = "https://search.vpb.lt/pdb/patent/eu/dossier/";
 
 
-const SearchForm = ({ setInputPatents, inputPatents, setData, data }) => {
+const SearchForm = ({ setInputPatents, inputPatents, setData, data, customProps }) => {
 
   function GetInputValues() {
     let inputValuesTemp = document.getElementById("numbers-input").value;
@@ -69,6 +69,7 @@ const SearchForm = ({ setInputPatents, inputPatents, setData, data }) => {
     } else {
       setData([])
     }
+    console.log(data)
   }, [inputPatents]);
 
   //refresh all data
@@ -80,10 +81,9 @@ const SearchForm = ({ setInputPatents, inputPatents, setData, data }) => {
 
   return (
     <>
-      <h1>VPB patent scraper</h1>
+      <h1>{customProps.title}</h1>
       <div className="form">
         <textarea
-          name=""
           id="numbers-input"
           placeholder="COPY PASTE EP NUMBERS LIKE SHOWN BELOW&#10;1234567&#10;2345678&#10;3456789"
         ></textarea>
@@ -101,7 +101,6 @@ const SearchForm = ({ setInputPatents, inputPatents, setData, data }) => {
 
             <ReactToExcel
               className={`btn ${data.length >= 1 && data[0].id != '' ? "" : "locked"}`}
-              disabled={false}
               table="data-to-excel"
               filename="excelFile"
               sheet="sheet1"
