@@ -1,4 +1,4 @@
 export const menuData = [
-    { link: "/VPB" },
-    { link: "/TM" },
+    { link: "/VPB", title: "VPB" },
+    { link: "/TM", title: "TM" },
 ]
