@@ -3,7 +3,8 @@
 
 
 
-This web app lets to search for patent information from vpb.lt by letting user input patent(s) EP number(s).
+This web app lets to search for patent information from vpb.lt in a faster way. Instead of opening every patent on vpb.lt website to check for the information and patent payment status this app allows user to input one or multiple patent(s) EP number(s) and get data in seconds.
+
 App scrapes data from vpb.lt and outputs data about patent(s) validation dates and status in form of table.
 After data is scraped user can download excel file with all the information.
 
